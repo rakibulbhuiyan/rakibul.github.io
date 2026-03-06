@@ -2,6 +2,1282 @@
 <html lang="en">
 
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rakibul | Backend Engineer</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top left, #0f172a 0, #020617 45%, #000 100%);
+      color: #e5e7eb;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+    }
+
+    .overlay-gradient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.13), transparent 55%);
+      z-index: -1;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 8%;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: conic-gradient(from 180deg at 50% 50%, #38bdf8, #22c55e, #6366f1, #38bdf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: #0b1120;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9), 0 18px 45px rgba(15, 23, 42, 0.9);
+    }
+
+    nav h2 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #e5e7eb;
+    }
+
+    nav h2 span {
+      color: #38bdf8;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 26px;
+      list-style: none;
+      align-items: center;
+    }
+
+    nav a {
+      color: #cbd5f5;
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #38bdf8, #6366f1);
+      transition: width 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #f9fafb;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background-image: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.3), transparent 55%);
+      background-color: rgba(15, 23, 42, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-cta span {
+      font-size: 14px;
+    }
+
+    .wrapper {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 40px;
+      align-items: center;
+      padding-top: 24px;
+      padding-bottom: 32px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.25), transparent 65%);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+    }
+
+    .hero-title {
+      font-size: clamp(32px, 5vw, 42px);
+      line-height: 1.12;
+      margin-bottom: 10px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(120deg, #38bdf8, #22c55e, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .typing-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #94a3b8;
+      margin-bottom: 16px;
+    }
+
+    .typing-label {
+      font-weight: 400;
+    }
+
+    .typing {
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    .typing-cursor {
+      width: 2px;
+      height: 16px;
+      background: #38bdf8;
+      animation: blink 1s steps(2, start) infinite;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      color: #9ca3af;
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.18s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: #0b1120;
+      box-shadow: 0 12px 35px rgba(37, 99, 235, 0.45);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 45px rgba(37, 99, 235, 0.6);
+    }
+
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.7);
+      border-color: rgba(148, 163, 184, 0.5);
+      color: #e5e7eb;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(148, 163, 184, 0.9);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 6px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .hero-meta-item strong {
+      display: block;
+      color: #e5e7eb;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .hero-right {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .profile-card {
+      position: relative;
+      padding: 22px 20px;
+      border-radius: 18px;
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 55%),
+        linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.96));
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      box-shadow:
+        0 22px 60px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.8);
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .profile-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .profile-role {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 14px;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: 12px;
+    }
+
+    .profile-stat {
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(30, 64, 175, 0.7);
+    }
+
+    .profile-stat span {
+      display: block;
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 2px;
+    }
+
+    .profile-stat strong {
+      font-size: 13px;
+      color: #e5e7eb;
+    }
+
+    .profile-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 6px;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .profile-footer a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 11px;
+    }
+
+    .profile-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .section {
+      margin-top: 60px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title span {
+      display: inline-flex;
+      width: 8px;
+      height: 24px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #38bdf8, #6366f1);
+    }
+
+    .section-title h2 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: #9ca3af;
+      max-width: 420px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .skill-card {
+      padding: 16px 16px 14px;
+      border-radius: 16px;
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), transparent 60%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.98));
+      border: 1px solid rgba(30, 64, 175, 0.7);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .skill-level {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      color: #bae6fd;
+      background: rgba(8, 47, 73, 0.8);
+    }
+
+    .bar {
+      background: #020617;
+      border-radius: 999px;
+      height: 7px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #22c55e);
+      border-radius: inherit;
+      position: relative;
+    }
+
+    .progress::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 50%, rgba(248, 250, 252, 0.4), transparent 55%);
+      opacity: 0.7;
+    }
+
+    .skill-meta {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .tag-row {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    .tag {
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(30, 64, 175, 0.8);
+      color: #c4d3ff;
+    }
+
+    .filter-buttons {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+      font-size: 12px;
+    }
+
+    .filter-buttons button {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+      cursor: pointer;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.18s ease;
+    }
+
+    .filter-buttons button:hover {
+      border-color: #38bdf8;
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      position: relative;
+      padding: 18px 16px 16px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.98));
+      border: 1px solid rgba(30, 64, 175, 0.7);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.24), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 60px rgba(15, 23, 42, 0.95);
+      border-color: rgba(56, 189, 248, 0.85);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 10px;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    .pill-small {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .card a {
+      color: #38bdf8;
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr);
+      gap: 18px;
+      font-size: 13px;
+    }
+
+    .timeline-card {
+      padding: 14px 14px 12px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(30, 64, 175, 0.7);
+    }
+
+    .timeline-card h3 {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .timeline-badge {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .timeline-card ul {
+      list-style: disc;
+      padding-left: 16px;
+      color: #9ca3af;
+    }
+
+    .timeline-card li {
+      margin-bottom: 3px;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.2fr);
+      gap: 20px;
+      font-size: 13px;
+    }
+
+    .contact-box {
+      padding: 16px 16px 14px;
+      border-radius: 16px;
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), transparent 65%),
+        linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.96));
+      border: 1px solid rgba(30, 64, 175, 0.7);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+    }
+
+    .contact-item {
+      margin-bottom: 10px;
+    }
+
+    .contact-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-bottom: 2px;
+    }
+
+    .contact-value {
+      font-size: 14px;
+      color: #e5e7eb;
+    }
+
+    .contact-value a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    .contact-value a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-note {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .mini-form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-form label {
+      font-size: 12px;
+      color: #cbd5f5;
+    }
+
+    .mini-form input,
+    .mini-form textarea {
+      width: 100%;
+      margin-top: 4px;
+      padding: 7px 9px;
+      border-radius: 10px;
+      border: 1px solid rgba(30, 64, 175, 0.7);
+      background: rgba(15, 23, 42, 0.95);
+      color: #e5e7eb;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .mini-form textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .mini-form input::placeholder,
+    .mini-form textarea::placeholder {
+      color: #64748b;
+    }
+
+    .mini-form button {
+      margin-top: 4px;
+      border: none;
+      cursor: pointer;
+      width: fit-content;
+    }
+
+    footer {
+      text-align: center;
+      padding: 26px 16px 32px;
+      font-size: 12px;
+      color: #6b7280;
+      border-top: 1px solid rgba(31, 41, 55, 0.9);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98));
+    }
+
+    footer span {
+      color: #9ca3af;
+    }
+
+    @keyframes blink {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 900px) {
+      nav {
+        padding-inline: 16px;
+      }
+
+      nav ul {
+        gap: 18px;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-right {
+        order: -1;
+        justify-content: flex-start;
+      }
+
+      .profile-card {
+        max-width: none;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .timeline,
+      .contact-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      nav ul {
+        display: none;
+      }
+
+      .wrapper {
+        padding-inline: 16px;
+      }
+
+      .hero {
+        padding-top: 10px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .section {
+        margin-top: 52px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="bg"></canvas>
+  <div class="overlay-gradient"></div>
+
+  <nav>
+    <div class="logo-wrap">
+      <div class="logo-mark">R</div>
+      <h2>Rakibul <span>Bhuiyan</span></h2>
+    </div>
+    <ul>
+      <li><a href="#top">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a class="nav-cta" href="mailto:rockyhasan.bspi@gmail.com">Let&apos;s talk <span>↗</span></a></li>
+    </ul>
+  </nav>
+
+  <main id="top" class="wrapper">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          Available for Backend roles
+        </div>
+
+        <h1 class="hero-title">
+          Hi, I&apos;m <span>Rakibul Bhuiyan</span>,<br />
+          a backend-focused engineer from Bangladesh.
+        </h1>
+
+        <div class="typing-wrap">
+          <span class="typing-label">I specialize in</span>
+          <span class="typing"></span>
+          <span class="typing-cursor"></span>
+        </div>
+
+        <p class="hero-subtitle">
+          I design and build reliable backend systems with Django and Django REST Framework — from clean, well-tested APIs
+          to production-ready architectures using Redis and Docker.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn-primary">View projects</a>
+          <a href="#contact" class="btn-ghost">Contact me</a>
+        </div>
+
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <strong>Backend first</strong>
+            APIs, auth, business logic
+          </div>
+          <div class="hero-meta-item">
+            <strong>Production mindset</strong>
+            Performance, reliability, clarity
+          </div>
+          <div class="hero-meta-item">
+            <strong>Open-source</strong>
+            Active on GitHub
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <aside class="profile-card" aria-label="Profile highlight">
+          <div class="badge-row">
+            <span class="pill">Backend Engineer</span>
+            <span class="pill">Django · DRF</span>
+          </div>
+
+          <div>
+            <div class="profile-name">Rakibul Bhuiyan</div>
+            <div class="profile-role">Backend Engineer · API Specialist</div>
+          </div>
+
+          <div class="profile-grid">
+            <div class="profile-stat">
+              <span>Core stack</span>
+              <strong>Django, DRF, Redis, Docker</strong>
+            </div>
+            <div class="profile-stat">
+              <span>Focus</span>
+              <strong>Clean, well-structured backends</strong>
+            </div>
+            <div class="profile-stat">
+              <span>GitHub</span>
+              <strong>@rakibulbhuiyan</strong>
+            </div>
+            <div class="profile-stat">
+              <span>Location</span>
+              <strong>Bangladesh (Remote-ready)</strong>
+            </div>
+          </div>
+
+          <div class="profile-footer">
+            <span>Open to backend and API engineering roles.</span>
+            <a href="mailto:rockyhasan.bspi@gmail.com">Email me →</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <header class="section-header">
+        <div class="section-title">
+          <span></span>
+          <h2>Core skills</h2>
+        </div>
+        <p class="section-subtitle">
+          A backend-focused skill set centered around Django and Django REST Framework, for building clean, maintainable,
+          and scalable APIs.
+        </p>
+      </header>
+
+      <div class="skills-grid">
+        <article class="skill-card">
+          <div class="skill-header">
+            <h3>Django</h3>
+            <span class="skill-level">Advanced · 90%</span>
+          </div>
+          <div class="bar">
+            <div class="progress" style="width:90%"></div>
+          </div>
+          <p class="skill-meta">
+            Building robust backend architectures, admin panels, and business logic with clean, reusable apps.
+          </p>
+          <div class="tag-row">
+            <span class="tag">ORM</span>
+            <span class="tag">Authentication</span>
+            <span class="tag">Admin</span>
+          </div>
+        </article>
+
+        <article class="skill-card">
+          <div class="skill-header">
+            <h3>Django REST Framework</h3>
+            <span class="skill-level">Advanced · 85%</span>
+          </div>
+          <div class="bar">
+            <div class="progress" style="width:85%"></div>
+          </div>
+          <p class="skill-meta">
+            Designing REST APIs with serializers, viewsets, permissions, throttling, and versioning.
+          </p>
+          <div class="tag-row">
+            <span class="tag">JWT</span>
+            <span class="tag">Pagination</span>
+            <span class="tag">Permissions</span>
+          </div>
+        </article>
+
+        <article class="skill-card">
+          <div class="skill-header">
+            <h3>Redis</h3>
+            <span class="skill-level">Strong · 80%</span>
+          </div>
+          <div class="bar">
+            <div class="progress" style="width:80%"></div>
+          </div>
+          <p class="skill-meta">
+            Caching, rate limiting, and background job support to keep APIs fast and responsive.
+          </p>
+          <div class="tag-row">
+            <span class="tag">Caching</span>
+            <span class="tag">Rate limiting</span>
+          </div>
+        </article>
+
+        <article class="skill-card">
+          <div class="skill-header">
+            <h3>Docker & DevOps basics</h3>
+            <span class="skill-level">Strong · 75%</span>
+          </div>
+          <div class="bar">
+            <div class="progress" style="width:75%"></div>
+          </div>
+          <p class="skill-meta">
+            Containerizing applications and preparing projects for deployment and team collaboration.
+          </p>
+          <div class="tag-row">
+            <span class="tag">Docker</span>
+            <span class="tag">Compose</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <header class="section-header">
+        <div class="section-title">
+          <span></span>
+          <h2>Selected projects</h2>
+        </div>
+        <p class="section-subtitle">
+          A sample of backend and API work. Filter by type to quickly see the kind of systems you&apos;re interested in.
+        </p>
+      </header>
+
+      <div class="filter-buttons">
+        <button onclick="filter('all')">All</button>
+        <button onclick="filter('api')">API</button>
+        <button onclick="filter('backend')">Backend</button>
+      </div>
+
+      <div class="projects" id="projectList">
+        <article class="card api">
+          <div class="card-meta">
+            <span class="pill-small">Attendance · API</span>
+            <span>DRF · PostgreSQL</span>
+          </div>
+          <h3>Attendance API</h3>
+          <p>
+            A Django REST-based attendance management backend with role-based access, reusable endpoints, and clean
+            separation between business logic and transport.
+          </p>
+          <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">View on GitHub →</a>
+        </article>
+
+        <article class="card backend">
+          <div class="card-meta">
+            <span class="pill-small">Social · Backend</span>
+            <span>REST · Auth</span>
+          </div>
+          <h3>Social Media Backend</h3>
+          <p>
+            Backend for a social platform: posts, comments, reactions, feeds, and authentication built with Django + DRF.
+          </p>
+          <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">View on GitHub →</a>
+        </article>
+
+        <article class="card api">
+          <div class="card-meta">
+            <span class="pill-small">Auth · API</span>
+            <span>JWT · Security</span>
+          </div>
+          <h3>Authentication API</h3>
+          <p>
+            JWT-based authentication service with refresh tokens, secure password handling, and clear permission
+            boundaries for client applications.
+          </p>
+          <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">View on GitHub →</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <header class="section-header">
+        <div class="section-title">
+          <span></span>
+          <h2>Experience snapshot</h2>
+        </div>
+        <p class="section-subtitle">
+          A quick overview of what I focus on when designing and shipping backend systems.
+        </p>
+      </header>
+
+      <div class="timeline">
+        <article class="timeline-card">
+          <h3>Backend Engineering</h3>
+          <div class="timeline-badge">Day-to-day focus</div>
+          <ul>
+            <li>Designing RESTful APIs that are predictable and easy to integrate.</li>
+            <li>Structuring Django projects for long-term maintainability.</li>
+            <li>Keeping performance in mind from the beginning (queries, caching, indexing).</li>
+          </ul>
+        </article>
+
+        <article class="timeline-card">
+          <h3>Collaboration & quality</h3>
+          <div class="timeline-badge">How I like to work</div>
+          <ul>
+            <li>Readable code with clear responsibility boundaries.</li>
+            <li>Small, review-friendly changes instead of big, risky ones.</li>
+            <li>Good documentation for APIs and key decisions.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <header class="section-header">
+        <div class="section-title">
+          <span></span>
+          <h2>Latest GitHub activity</h2>
+        </div>
+        <p class="section-subtitle">
+          A preview of some public repositories from my GitHub profile. This updates automatically via the GitHub API.
+        </p>
+      </header>
+
+      <div class="projects" id="repos"></div>
+    </section>
+
+    <section id="contact" class="section">
+      <header class="section-header">
+        <div class="section-title">
+          <span></span>
+          <h2>Let&apos;s build something</h2>
+        </div>
+        <p class="section-subtitle">
+          Whether you&apos;re looking for a backend engineer, API specialist, or contributor for your team, feel free to reach
+          out directly.
+        </p>
+      </header>
+
+      <div class="contact-layout">
+        <div class="contact-box">
+          <div class="contact-item">
+            <div class="contact-label">Primary email</div>
+            <div class="contact-value">
+              <a href="mailto:rockyhasan.bspi@gmail.com">rockyhasan.bspi@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-label">GitHub</div>
+            <div class="contact-value">
+              <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">
+                github.com/rakibulbhuiyan
+              </a>
+            </div>
+          </div>
+
+          <p class="contact-note">
+            Send me a short message about your project, stack, and timeline — I&apos;ll get back to you as soon as I can.
+          </p>
+        </div>
+
+        <div class="contact-box">
+          <form class="mini-form" onsubmit="handleQuickMessage(event)">
+            <label>
+              Your email
+              <input type="email" name="from" placeholder="you@example.com" required />
+            </label>
+            <label>
+              Short message
+              <textarea name="message" placeholder="What would you like to build together?" required></textarea>
+            </label>
+            <button type="submit" class="btn-primary">Compose email</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <span>© 2026</span> · Rakibul Bhuiyan · Backend Engineer
+    </p>
+  </footer>
+
+  <script>
+    const words = ["Backend Engineer", "Django Developer", "API Developer"];
+    let i = 0;
+
+    function updateTyping() {
+      const el = document.querySelector(".typing");
+      if (!el) return;
+      el.textContent = words[i];
+      i = (i + 1) % words.length;
+    }
+
+    updateTyping();
+    setInterval(updateTyping, 2000);
+
+    function filter(type) {
+      const cards = document.querySelectorAll("#projectList .card");
+      cards.forEach((card) => {
+        if (type === "all" || card.classList.contains(type)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    fetch("https://api.github.com/users/rakibulbhuiyan/repos")
+      .then((res) => res.json())
+      .then((data) => {
+        const repos = document.getElementById("repos");
+        if (!Array.isArray(data)) return;
+
+        data.slice(0, 6).forEach((repo) => {
+          const div = document.createElement("article");
+          div.className = "card";
+          div.innerHTML = `
+            <div class="card-meta">
+              <span class="pill-small">${repo.private ? "Private" : "Public"} repo</span>
+              <span>${repo.language || "Backend"}</span>
+            </div>
+            <h3>${repo.name}</h3>
+            <p>${repo.description || "No description provided yet."}</p>
+            <a href="${repo.html_url}" target="_blank" rel="noreferrer">View repository →</a>
+          `;
+          repos.appendChild(div);
+        });
+      })
+      .catch(() => {
+        const repos = document.getElementById("repos");
+        if (repos) {
+          repos.innerHTML =
+            '<p style="font-size:13px;color:#9ca3af;">Unable to load repositories right now. Please try again later.</p>';
+        }
+      });
+
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    const particles = [];
+    const PARTICLE_COUNT = 80;
+
+    for (let j = 0; j < PARTICLE_COUNT; j++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.8 + 0.4,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#020617";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 2);
+        gradient.addColorStop(0, "rgba(56, 189, 248, 0.9)");
+        gradient.addColorStop(1, "rgba(15, 23, 42, 0)");
+        ctx.fillStyle = gradient;
+        ctx.fill();
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    function handleQuickMessage(e) {
+      e.preventDefault();
+      const form = e.target;
+      const from = form.from.value.trim();
+      const message = form.message.value.trim();
+      if (!from || !message) return;
+
+      const subject = encodeURIComponent("New message from portfolio");
+      const body = encodeURIComponent(`From: ${from}\n\n${message}`);
+      window.location.href = `mailto:rockyhasan.bspi@gmail.com?subject=${subject}&body=${body}`;
+    }
+  </script>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
