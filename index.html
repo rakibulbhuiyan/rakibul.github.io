@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Rakibul | Backend Developer</title>
 
 <style>
+
 body{
-font-family: Arial, sans-serif;
 margin:0;
+font-family:Arial;
 background:#0f172a;
 color:white;
 }
@@ -19,6 +22,7 @@ padding:80px 20px;
 
 h1{
 font-size:48px;
+margin-bottom:10px;
 }
 
 .container{
@@ -28,11 +32,7 @@ padding:20px;
 }
 
 .section{
-margin-top:50px;
-}
-
-.projects li{
-margin:10px 0;
+margin-top:60px;
 }
 
 .card{
@@ -42,26 +42,59 @@ border-radius:10px;
 margin:10px 0;
 }
 
+.card a{
+color:#38bdf8;
+text-decoration:none;
+}
+
+.card a:hover{
+text-decoration:underline;
+}
+
+form input, form textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:5px;
+}
+
+button{
+margin-top:10px;
+padding:10px 20px;
+background:#38bdf8;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
 footer{
 text-align:center;
 margin-top:60px;
 padding:20px;
 background:#020617;
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
+
 <h1>Hi, I'm Rakibul</h1>
+
 <p>Backend Developer</p>
-<p>Django | DRF | Redis | Docker</p>
+
+<p>Django | Python | DRF | Redis | Docker</p>
+
 </header>
 
 <div class="container">
 
 <div class="section">
+
 <h2>Projects</h2>
 
 <div class="card">
@@ -82,15 +115,75 @@ background:#020617;
 </div>
 
 <div class="section">
+
+<h2>GitHub</h2>
+
+<div class="card">
+<a href="https://github.com/rakibulbhuiyan" target="_blank">
+github.com/rakibulbhuiyan
+</a>
+</div>
+
+</div>
+
+<div class="section">
+
 <h2>Contact</h2>
-<p>Email: rockyhasan.bspi@email.com</p>
+
+<form>
+
+<input placeholder="Name">
+
+<input placeholder="Email">
+
+<textarea placeholder="Message"></textarea>
+
+<button>Send</button>
+
+</form>
+
 </div>
 
 </div>
 
 <footer>
+
 <p>© 2026 Rakibul | Backend Developer</p>
+
 </footer>
 
+<script>
+
+fetch("https://api.github.com/users/rakibulbhuiyan/repos")
+
+.then(res => res.json())
+
+.then(data => {
+
+let section = document.createElement("div")
+
+section.className="section"
+
+section.innerHTML="<h2>GitHub Repositories</h2>"
+
+data.slice(0,5).forEach(repo=>{
+
+let div=document.createElement("div")
+
+div.className="card"
+
+div.innerHTML=`<a href="${repo.html_url}" target="_blank">${repo.name}</a>`
+
+section.appendChild(div)
+
+})
+
+document.querySelector(".container").appendChild(section)
+
+})
+
+</script>
+
 </body>
+
 </html>
