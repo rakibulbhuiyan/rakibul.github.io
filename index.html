@@ -1,45 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Rakibul | Backend Developer</title>
+<title>Rakibul | Backend Engineer</title>
 
 <style>
 
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
 font-family:Arial;
+}
+
+body{
 background:#0f172a;
 color:white;
+line-height:1.6;
 }
 
-header{
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 10%;
+background:#020617;
+position:sticky;
+top:0;
+}
+
+nav h2{
+color:#38bdf8;
+}
+
+nav ul{
+display:flex;
+gap:20px;
+list-style:none;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+}
+
+.hero{
 text-align:center;
-padding:80px 20px;
+padding:120px 20px;
 }
 
-h1{
+.hero h1{
 font-size:48px;
 margin-bottom:10px;
 }
 
+.hero p{
+color:#94a3b8;
+}
+
 .container{
-max-width:900px;
+max-width:1000px;
 margin:auto;
-padding:20px;
+padding:40px 20px;
 }
 
 .section{
-margin-top:60px;
+margin-top:80px;
+}
+
+.section h2{
+margin-bottom:20px;
+border-left:4px solid #38bdf8;
+padding-left:10px;
+}
+
+.skills .skill{
+margin-bottom:20px;
+}
+
+.bar{
+background:#1e293b;
+height:10px;
+border-radius:10px;
+overflow:hidden;
+}
+
+.progress{
+height:10px;
+background:#38bdf8;
+}
+
+.projects{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
 }
 
 .card{
 background:#1e293b;
 padding:20px;
 border-radius:10px;
-margin:10px 0;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card img{
+width:100%;
+border-radius:8px;
+margin-bottom:10px;
 }
 
 .card a{
@@ -47,20 +122,16 @@ color:#38bdf8;
 text-decoration:none;
 }
 
-.card a:hover{
-text-decoration:underline;
-}
-
-form input, form textarea{
+.contact input,
+.contact textarea{
 width:100%;
 padding:10px;
-margin-top:10px;
+margin:10px 0;
 border:none;
 border-radius:5px;
 }
 
 button{
-margin-top:10px;
 padding:10px 20px;
 background:#38bdf8;
 border:none;
@@ -70,8 +141,8 @@ cursor:pointer;
 
 footer{
 text-align:center;
+padding:30px;
 margin-top:60px;
-padding:20px;
 background:#020617;
 }
 
@@ -81,56 +152,124 @@ background:#020617;
 
 <body>
 
-<header>
+<nav>
+
+<h2>Rakibul</h2>
+
+<ul>
+<li><a href="#">Home</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+
+</nav>
+
+<section class="hero">
 
 <h1>Hi, I'm Rakibul</h1>
 
-<p>Backend Developer</p>
+<p>Backend Engineer</p>
 
-<p>Django | Python | DRF | Redis | Docker</p>
+<p>Django | DRF | Redis | Docker</p>
 
-</header>
+</section>
 
 <div class="container">
 
-<div class="section">
+<section id="skills" class="section">
+
+<h2>Skills</h2>
+
+<div class="skills">
+
+<div class="skill">
+
+<p>Django</p>
+
+<div class="bar"><div class="progress" style="width:90%"></div></div>
+
+</div>
+
+<div class="skill">
+
+<p>Django REST Framework</p>
+
+<div class="bar"><div class="progress" style="width:85%"></div></div>
+
+</div>
+
+<div class="skill">
+
+<p>Redis</p>
+
+<div class="bar"><div class="progress" style="width:80%"></div></div>
+
+</div>
+
+<div class="skill">
+
+<p>Docker</p>
+
+<div class="bar"><div class="progress" style="width:75%"></div></div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="projects" class="section">
 
 <h2>Projects</h2>
 
+<div class="projects">
+
 <div class="card">
+
+<img src="https://picsum.photos/400/200">
+
 <h3>Attendance System API</h3>
-<p>Django REST API for employee attendance tracking.</p>
+
+<p>Employee attendance backend built with Django REST.</p>
+
 </div>
 
 <div class="card">
+
+<img src="https://picsum.photos/401/200">
+
 <h3>Social Media Backend</h3>
+
 <p>Post, comment, reaction and websocket sharing system.</p>
+
 </div>
 
 <div class="card">
+
+<img src="https://picsum.photos/402/200">
+
 <h3>Authentication System</h3>
+
 <p>JWT authentication with refresh tokens.</p>
-</div>
 
-</div>
-
-<div class="section">
-
-<h2>GitHub</h2>
-
-<div class="card">
-<a href="https://github.com/rakibulbhuiyan" target="_blank">
-github.com/rakibulbhuiyan
-</a>
 </div>
 
 </div>
 
-<div class="section">
+</section>
+
+<section class="section">
+
+<h2>GitHub Repositories</h2>
+
+<div id="repos" class="projects"></div>
+
+</section>
+
+<section id="contact" class="section contact">
 
 <h2>Contact</h2>
-
-<form>
 
 <input placeholder="Name">
 
@@ -140,15 +279,13 @@ github.com/rakibulbhuiyan
 
 <button>Send</button>
 
-</form>
-
-</div>
+</section>
 
 </div>
 
 <footer>
 
-<p>© 2026 Rakibul | Backend Developer</p>
+<p>© 2026 Rakibul | Backend Engineer</p>
 
 </footer>
 
@@ -156,29 +293,25 @@ github.com/rakibulbhuiyan
 
 fetch("https://api.github.com/users/rakibulbhuiyan/repos")
 
-.then(res => res.json())
+.then(res=>res.json())
 
-.then(data => {
+.then(data=>{
 
-let section = document.createElement("div")
+let repos=document.getElementById("repos")
 
-section.className="section"
-
-section.innerHTML="<h2>GitHub Repositories</h2>"
-
-data.slice(0,5).forEach(repo=>{
+data.slice(0,6).forEach(repo=>{
 
 let div=document.createElement("div")
 
 div.className="card"
 
-div.innerHTML=`<a href="${repo.html_url}" target="_blank">${repo.name}</a>`
+div.innerHTML=`<h3>${repo.name}</h3>
+<p>${repo.description || "No description"}</p>
+<a href="${repo.html_url}" target="_blank">View Repository</a>`
 
-section.appendChild(div)
+repos.appendChild(div)
 
 })
-
-document.querySelector(".container").appendChild(section)
 
 })
 
