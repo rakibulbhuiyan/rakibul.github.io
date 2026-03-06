@@ -8,19 +8,28 @@
 
 <title>Rakibul | Backend Engineer</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
 
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial;
+font-family:Poppins;
 }
 
 body{
-background:#0f172a;
+background:#020617;
 color:white;
-line-height:1.6;
+overflow-x:hidden;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
 }
 
 nav{
@@ -28,9 +37,8 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:20px 10%;
-background:#020617;
-position:sticky;
-top:0;
+background:rgba(0,0,0,0.5);
+backdrop-filter:blur(10px);
 }
 
 nav h2{
@@ -55,15 +63,15 @@ padding:120px 20px;
 
 .hero h1{
 font-size:48px;
-margin-bottom:10px;
 }
 
-.hero p{
-color:#94a3b8;
+.typing{
+color:#38bdf8;
+font-weight:bold;
 }
 
 .container{
-max-width:1000px;
+max-width:1100px;
 margin:auto;
 padding:40px 20px;
 }
@@ -94,6 +102,19 @@ height:10px;
 background:#38bdf8;
 }
 
+.filter-buttons{
+margin-bottom:20px;
+}
+
+.filter-buttons button{
+margin-right:10px;
+padding:8px 15px;
+border:none;
+background:#38bdf8;
+cursor:pointer;
+border-radius:5px;
+}
+
 .projects{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -104,39 +125,11 @@ gap:20px;
 background:#1e293b;
 padding:20px;
 border-radius:10px;
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-}
-
-.card img{
-width:100%;
-border-radius:8px;
-margin-bottom:10px;
 }
 
 .card a{
 color:#38bdf8;
 text-decoration:none;
-}
-
-.contact input,
-.contact textarea{
-width:100%;
-padding:10px;
-margin:10px 0;
-border:none;
-border-radius:5px;
-}
-
-button{
-padding:10px 20px;
-background:#38bdf8;
-border:none;
-border-radius:5px;
-cursor:pointer;
 }
 
 footer{
@@ -151,6 +144,8 @@ background:#020617;
 </head>
 
 <body>
+
+<canvas id="bg"></canvas>
 
 <nav>
 
@@ -169,9 +164,7 @@ background:#020617;
 
 <h1>Hi, I'm Rakibul</h1>
 
-<p>Backend Engineer</p>
-
-<p>Django | DRF | Redis | Docker</p>
+<p class="typing"></p>
 
 </section>
 
@@ -184,35 +177,23 @@ background:#020617;
 <div class="skills">
 
 <div class="skill">
-
 <p>Django</p>
-
 <div class="bar"><div class="progress" style="width:90%"></div></div>
-
 </div>
 
 <div class="skill">
-
 <p>Django REST Framework</p>
-
 <div class="bar"><div class="progress" style="width:85%"></div></div>
-
 </div>
 
 <div class="skill">
-
 <p>Redis</p>
-
 <div class="bar"><div class="progress" style="width:80%"></div></div>
-
 </div>
 
 <div class="skill">
-
 <p>Docker</p>
-
 <div class="bar"><div class="progress" style="width:75%"></div></div>
-
 </div>
 
 </div>
@@ -223,36 +204,29 @@ background:#020617;
 
 <h2>Projects</h2>
 
-<div class="projects">
+<div class="filter-buttons">
 
-<div class="card">
-
-<img src="https://picsum.photos/400/200">
-
-<h3>Attendance System API</h3>
-
-<p>Employee attendance backend built with Django REST.</p>
+<button onclick="filter('all')">All</button>
+<button onclick="filter('api')">API</button>
+<button onclick="filter('backend')">Backend</button>
 
 </div>
 
-<div class="card">
+<div class="projects" id="projectList">
 
-<img src="https://picsum.photos/401/200">
+<div class="card api">
+<h3>Attendance API</h3>
+<p>Django REST attendance system.</p>
+</div>
 
+<div class="card backend">
 <h3>Social Media Backend</h3>
-
-<p>Post, comment, reaction and websocket sharing system.</p>
-
+<p>Post, comment, reaction system.</p>
 </div>
 
-<div class="card">
-
-<img src="https://picsum.photos/402/200">
-
-<h3>Authentication System</h3>
-
-<p>JWT authentication with refresh tokens.</p>
-
+<div class="card api">
+<h3>Authentication API</h3>
+<p>JWT authentication system.</p>
 </div>
 
 </div>
@@ -263,21 +237,21 @@ background:#020617;
 
 <h2>GitHub Repositories</h2>
 
-<div id="repos" class="projects"></div>
+<div class="projects" id="repos"></div>
 
 </section>
 
-<section id="contact" class="section contact">
+<section id="contact" class="section">
 
 <h2>Contact</h2>
 
-<input placeholder="Name">
+<p>Email: rakib@email.com</p>
 
-<input placeholder="Email">
-
-<textarea placeholder="Message"></textarea>
-
-<button>Send</button>
+<p>
+<a href="https://github.com/rakibulbhuiyan" target="_blank">
+GitHub Profile
+</a>
+</p>
 
 </section>
 
@@ -290,6 +264,36 @@ background:#020617;
 </footer>
 
 <script>
+
+let words=["Backend Engineer","Django Developer","API Developer"]
+
+let i=0
+
+setInterval(()=>{
+
+document.querySelector(".typing").innerText=words[i]
+
+i=(i+1)%words.length
+
+},2000)
+
+function filter(type){
+
+let cards=document.querySelectorAll(".card")
+
+cards.forEach(card=>{
+
+if(type==="all"||card.classList.contains(type))
+
+card.style.display="block"
+
+else
+
+card.style.display="none"
+
+})
+
+}
 
 fetch("https://api.github.com/users/rakibulbhuiyan/repos")
 
@@ -307,7 +311,7 @@ div.className="card"
 
 div.innerHTML=`<h3>${repo.name}</h3>
 <p>${repo.description || "No description"}</p>
-<a href="${repo.html_url}" target="_blank">View Repository</a>`
+<a href="${repo.html_url}" target="_blank">View Repo</a>`
 
 repos.appendChild(div)
 
@@ -315,8 +319,46 @@ repos.appendChild(div)
 
 })
 
+const canvas=document.getElementById("bg")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let particles=[]
+
+for(let i=0;i<80;i++){
+
+particles.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2
+
+})
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+particles.forEach(p=>{
+
+ctx.beginPath()
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
+ctx.fillStyle="#38bdf8"
+ctx.fill()
+
+})
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
+
 </script>
 
 </body>
-
 </html>
