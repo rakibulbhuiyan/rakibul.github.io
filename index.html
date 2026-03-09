@@ -515,6 +515,16 @@
       transition: all 0.18s ease;
     }
 
+    .filter-buttons button {
+      font-weight: 500;
+    }
+
+    .filter-buttons button.active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.35), rgba(99, 102, 241, 0.3));
+      border-color: rgba(56, 189, 248, 0.8);
+      color: #f0f9ff;
+    }
+
     .filter-buttons button:hover {
       border-color: #38bdf8;
       background: rgba(15, 23, 42, 0.95);
@@ -522,76 +532,132 @@
 
     .projects {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 22px;
     }
 
     .card {
       position: relative;
-      padding: 18px 16px 16px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.98));
-      border: 1px solid rgba(30, 64, 175, 0.7);
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+      padding: 0;
+      border-radius: 20px;
+      background: linear-gradient(165deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.92));
+      border: 1px solid rgba(30, 64, 175, 0.6);
+      box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(148, 163, 184, 0.08);
       overflow: hidden;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
     }
 
     .card::before {
       content: "";
       position: absolute;
-      inset: -40px;
-      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.24), transparent 60%);
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #38bdf8, #6366f1);
+      opacity: 0.85;
+    }
+
+    .card.card-accent-green::before { background: linear-gradient(90deg, #22c55e, #38bdf8); }
+    .card.card-accent-violet::before { background: linear-gradient(90deg, #a855f7, #6366f1); }
+    .card.card-accent-amber::before { background: linear-gradient(90deg, #f59e0b, #22c55e); }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: -60px;
+      background: radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.15), transparent 50%);
       opacity: 0;
-      transition: opacity 0.2s ease;
+      transition: opacity 0.25s ease;
       pointer-events: none;
     }
 
     .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 22px 60px rgba(15, 23, 42, 0.95);
-      border-color: rgba(56, 189, 248, 0.85);
+      transform: translateY(-4px);
+      box-shadow:
+        0 24px 48px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(56, 189, 248, 0.25);
+      border-color: rgba(56, 189, 248, 0.5);
     }
 
-    .card:hover::before {
+    .card:hover::after {
       opacity: 1;
     }
 
-    .card h3 {
-      font-size: 15px;
-      margin-bottom: 6px;
-    }
-
-    .card p {
-      font-size: 13px;
-      color: #9ca3af;
-      margin-bottom: 10px;
+    .card-inner {
+      padding: 22px 20px 20px;
+      position: relative;
+      z-index: 1;
     }
 
     .card-meta {
       display: flex;
-      justify-content: space-between;
+      flex-wrap: wrap;
       align-items: center;
+      gap: 8px;
       font-size: 11px;
-      color: #9ca3af;
-      margin-bottom: 8px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
     .pill-small {
-      padding: 2px 8px;
+      padding: 4px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+      color: #c4d3ff;
+      font-weight: 500;
+    }
+
+    .card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+      line-height: 1.3;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .card-tag {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      background: rgba(30, 64, 175, 0.4);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: #bae6fd;
     }
 
     .card a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       color: #38bdf8;
       font-size: 12px;
+      font-weight: 500;
       text-decoration: none;
+      letter-spacing: 0.04em;
     }
 
     .card a:hover {
       text-decoration: underline;
+      color: #7dd3fc;
     }
 
     .timeline {
@@ -996,53 +1062,141 @@
           <h2>Selected projects</h2>
         </div>
         <p class="section-subtitle">
-          A sample of backend and API work. Filter by type to quickly see the kind of systems you&apos;re interested in.
+          Production-grade backends and APIs. Filter by category to see platforms, real-time systems, or e-commerce.
         </p>
       </header>
 
-      <div class="filter-buttons">
-        <button onclick="filter('all')">All</button>
-        <button onclick="filter('api')">API</button>
-        <button onclick="filter('backend')">Backend</button>
+      <div class="filter-buttons" role="group" aria-label="Filter projects">
+        <button type="button" class="active" data-filter="all" onclick="filter('all')">All</button>
+        <button type="button" data-filter="platform" onclick="filter('platform')">Platform</button>
+        <button type="button" data-filter="api" onclick="filter('api')">API</button>
+        <button type="button" data-filter="realtime" onclick="filter('realtime')">Real-time</button>
+        <button type="button" data-filter="ecommerce" onclick="filter('ecommerce')">E-commerce</button>
       </div>
 
       <div class="projects" id="projectList">
-        <article class="card api">
-          <div class="card-meta">
-            <span class="pill-small">Attendance · API</span>
-            <span>DRF · PostgreSQL</span>
+        <article class="card platform card-accent-green">
+          <div class="card-inner">
+            <div class="card-meta">
+              <span class="pill-small">Platform</span>
+              <span>Django · Celery · JWT</span>
+            </div>
+            <h3>Hotel Management System</h3>
+            <p>
+              Scalable hotel booking and management platform with JWT authentication, role-based access control, and
+              Celery-powered task automation for email and payment processing.
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">JWT</span>
+              <span class="card-tag">RBAC</span>
+              <span class="card-tag">Celery</span>
+              <span class="card-tag">Payments</span>
+            </div>
+            <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">View project →</a>
           </div>
-          <h3>Attendance API</h3>
-          <p>
-            A Django REST-based attendance management backend with role-based access, reusable endpoints, and clean
-            separation between business logic and transport.
-          </p>
-          <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">View on GitHub →</a>
         </article>
 
-        <article class="card backend">
-          <div class="card-meta">
-            <span class="pill-small">Social · Backend</span>
-            <span>REST · Auth</span>
+        <article class="card platform realtime card-accent-violet">
+          <div class="card-inner">
+            <div class="card-meta">
+              <span class="pill-small">Platform · Real-time</span>
+              <span>OAuth2 · Redis · WebSockets</span>
+            </div>
+            <h3>Service Provider Platform</h3>
+            <p>
+              Multi-vendor service booking system with secure OAuth2 login, subscription plans, and real-time in-app
+              notifications and chat using Redis and WebSockets.
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">OAuth2</span>
+              <span class="card-tag">WebSockets</span>
+              <span class="card-tag">Redis</span>
+              <span class="card-tag">Subscriptions</span>
+            </div>
+            <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">View project →</a>
           </div>
-          <h3>Social Media Backend</h3>
-          <p>
-            Backend for a social platform: posts, comments, reactions, feeds, and authentication built with Django + DRF.
-          </p>
-          <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">View on GitHub →</a>
         </article>
 
-        <article class="card api">
-          <div class="card-meta">
-            <span class="pill-small">Auth · API</span>
-            <span>JWT · Security</span>
+        <article class="card ecommerce card-accent-amber">
+          <div class="card-inner">
+            <div class="card-meta">
+              <span class="pill-small">E-commerce</span>
+              <span>DRF · Celery · Redis</span>
+            </div>
+            <h3>E-commerce Application</h3>
+            <p>
+              Full-featured e-commerce backend with JWT authentication, order tracking, asynchronous payment
+              confirmation (Celery + Redis), and admin analytics APIs.
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">JWT</span>
+              <span class="card-tag">Celery</span>
+              <span class="card-tag">Analytics</span>
+              <span class="card-tag">Orders</span>
+            </div>
+            <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">View project →</a>
           </div>
-          <h3>Authentication API</h3>
-          <p>
-            JWT-based authentication service with refresh tokens, secure password handling, and clear permission
-            boundaries for client applications.
-          </p>
-          <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">View on GitHub →</a>
+        </article>
+
+        <article class="card api realtime card-accent-violet">
+          <div class="card-inner">
+            <div class="card-meta">
+              <span class="pill-small">API · Real-time</span>
+              <span>Django Channels · Redis</span>
+            </div>
+            <h3>AelvinAPI (Social App)</h3>
+            <p>
+              Social networking API with JWT-based auth, user posts, reactions, and real-time chat using Django
+              Channels and Redis.
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">Channels</span>
+              <span class="card-tag">JWT</span>
+              <span class="card-tag">Redis</span>
+              <span class="card-tag">Reactions</span>
+            </div>
+            <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">View project →</a>
+          </div>
+        </article>
+
+        <article class="card api realtime">
+          <div class="card-inner">
+            <div class="card-meta">
+              <span class="pill-small">API · Real-time</span>
+              <span>GPT · WebSockets</span>
+            </div>
+            <h3>Chatbot System</h3>
+            <p>
+              Intelligent chatbot API integrated with GPT, providing real-time conversation, authentication, and
+              message event handling via WebSockets.
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">GPT</span>
+              <span class="card-tag">WebSockets</span>
+              <span class="card-tag">Auth</span>
+            </div>
+            <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">View project →</a>
+          </div>
+        </article>
+
+        <article class="card platform card-accent-green">
+          <div class="card-inner">
+            <div class="card-meta">
+              <span class="pill-small">Platform</span>
+              <span>Celery · Real-time</span>
+            </div>
+            <h3>Library Management System</h3>
+            <p>
+              Digital library system with secure user authentication, fine management automation via Celery, and
+              real-time book availability updates.
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">Celery</span>
+              <span class="card-tag">Auth</span>
+              <span class="card-tag">Automation</span>
+            </div>
+            <a href="https://github.com/rakibulbhuiyan" target="_blank" rel="noreferrer">View project →</a>
+          </div>
         </article>
       </div>
     </section>
@@ -1170,11 +1324,11 @@
     function filter(type) {
       const cards = document.querySelectorAll("#projectList .card");
       cards.forEach((card) => {
-        if (type === "all" || card.classList.contains(type)) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
+        const show = type === "all" || card.classList.contains(type);
+        card.style.display = show ? "block" : "none";
+      });
+      document.querySelectorAll(".filter-buttons button").forEach((btn) => {
+        btn.classList.toggle("active", btn.getAttribute("data-filter") === type);
       });
     }
 
@@ -1188,13 +1342,15 @@
           const div = document.createElement("article");
           div.className = "card";
           div.innerHTML = `
-            <div class="card-meta">
-              <span class="pill-small">${repo.private ? "Private" : "Public"} repo</span>
-              <span>${repo.language || "Backend"}</span>
+            <div class="card-inner">
+              <div class="card-meta">
+                <span class="pill-small">${repo.private ? "Private" : "Public"} repo</span>
+                <span>${repo.language || "Backend"}</span>
+              </div>
+              <h3>${repo.name}</h3>
+              <p>${repo.description || "No description provided yet."}</p>
+              <a href="${repo.html_url}" target="_blank" rel="noreferrer">View repository →</a>
             </div>
-            <h3>${repo.name}</h3>
-            <p>${repo.description || "No description provided yet."}</p>
-            <a href="${repo.html_url}" target="_blank" rel="noreferrer">View repository →</a>
           `;
           repos.appendChild(div);
         });
@@ -1273,4 +1429,359 @@
   </script>
 </body>
 
+</html>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
+
+body{
+background:#020617;
+color:white;
+overflow-x:hidden;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 10%;
+background:rgba(0,0,0,0.5);
+backdrop-filter:blur(10px);
+}
+
+nav h2{
+color:#38bdf8;
+}
+
+nav ul{
+display:flex;
+gap:20px;
+list-style:none;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+}
+
+.hero{
+text-align:center;
+padding:120px 20px;
+}
+
+.hero h1{
+font-size:48px;
+}
+
+.typing{
+color:#38bdf8;
+font-weight:bold;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:40px 20px;
+}
+
+.section{
+margin-top:80px;
+}
+
+.section h2{
+margin-bottom:20px;
+border-left:4px solid #38bdf8;
+padding-left:10px;
+}
+
+.skills .skill{
+margin-bottom:20px;
+}
+
+.bar{
+background:#1e293b;
+height:10px;
+border-radius:10px;
+overflow:hidden;
+}
+
+.progress{
+height:10px;
+background:#38bdf8;
+}
+
+.filter-buttons{
+margin-bottom:20px;
+}
+
+.filter-buttons button{
+margin-right:10px;
+padding:8px 15px;
+border:none;
+background:#38bdf8;
+cursor:pointer;
+border-radius:5px;
+}
+
+.projects{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+}
+
+.card a{
+color:#38bdf8;
+text-decoration:none;
+}
+
+footer{
+text-align:center;
+padding:30px;
+margin-top:60px;
+background:#020617;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<nav>
+
+<h2>Rakibul</h2>
+
+<ul>
+<li><a href="#">Home</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<h1>Hi, I'm Rakibul</h1>
+
+<p class="typing"></p>
+
+</section>
+
+<div class="container">
+
+<section id="skills" class="section">
+
+<h2>Skills</h2>
+
+<div class="skills">
+
+<div class="skill">
+<p>Django</p>
+<div class="bar"><div class="progress" style="width:90%"></div></div>
+</div>
+
+<div class="skill">
+<p>Django REST Framework</p>
+<div class="bar"><div class="progress" style="width:85%"></div></div>
+</div>
+
+<div class="skill">
+<p>Redis</p>
+<div class="bar"><div class="progress" style="width:80%"></div></div>
+</div>
+
+<div class="skill">
+<p>Docker</p>
+<div class="bar"><div class="progress" style="width:75%"></div></div>
+</div>
+
+</div>
+
+</section>
+
+<section id="projects" class="section">
+
+<h2>Projects</h2>
+
+<div class="filter-buttons">
+
+<button onclick="filter('all')">All</button>
+<button onclick="filter('api')">API</button>
+<button onclick="filter('backend')">Backend</button>
+
+</div>
+
+<div class="projects" id="projectList">
+
+<div class="card api">
+<h3>Attendance API</h3>
+<p>Django REST attendance system.</p>
+</div>
+
+<div class="card backend">
+<h3>Social Media Backend</h3>
+<p>Post, comment, reaction system.</p>
+</div>
+
+<div class="card api">
+<h3>Authentication API</h3>
+<p>JWT authentication system.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>GitHub Repositories</h2>
+
+<div class="projects" id="repos"></div>
+
+</section>
+
+<section id="contact" class="section">
+
+<h2>Contact</h2>
+
+<p>Email: rockyhasan.bspi@email.com</p>
+
+<p>
+<a href="https://github.com/rakibulbhuiyan" target="_blank">
+GitHub Profile
+</a>
+</p>
+
+</section>
+
+</div>
+
+<footer>
+
+<p>© 2026 Rakibul | Backend Engineer</p>
+
+</footer>
+
+<script>
+
+let words=["Backend Engineer","Django Developer","API Developer"]
+
+let i=0
+
+setInterval(()=>{
+
+document.querySelector(".typing").innerText=words[i]
+
+i=(i+1)%words.length
+
+},2000)
+
+function filter(type){
+
+let cards=document.querySelectorAll(".card")
+
+cards.forEach(card=>{
+
+if(type==="all"||card.classList.contains(type))
+
+card.style.display="block"
+
+else
+
+card.style.display="none"
+
+})
+
+}
+
+fetch("https://api.github.com/users/rakibulbhuiyan/repos")
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let repos=document.getElementById("repos")
+
+data.slice(0,6).forEach(repo=>{
+
+let div=document.createElement("div")
+
+div.className="card"
+
+div.innerHTML=`<h3>${repo.name}</h3>
+<p>${repo.description || "No description"}</p>
+<a href="${repo.html_url}" target="_blank">View Repo</a>`
+
+repos.appendChild(div)
+
+})
+
+})
+
+const canvas=document.getElementById("bg")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let particles=[]
+
+for(let i=0;i<80;i++){
+
+particles.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2
+
+})
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+particles.forEach(p=>{
+
+ctx.beginPath()
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
+ctx.fillStyle="#38bdf8"
+ctx.fill()
+
+})
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
+
+</script>
+
+</body>
 </html>
